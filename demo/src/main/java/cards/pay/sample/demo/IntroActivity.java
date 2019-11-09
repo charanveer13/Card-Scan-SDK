@@ -15,32 +15,26 @@ public class IntroActivity extends AppCompatActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
-
         mToolbar = findViewById(R.id.toolbar);
         setupToolbar();
-
-        findViewById(R.id.button_next).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.button_next).setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View view) {
+            public void onClick(View view){
                 goToCardDetails();
             }
         });
-
     }
-
-    private void setupToolbar() {
+    private void setupToolbar(){
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View view) {
+            public void onClick(View view){
                 goToCardDetails();
             }
         });
     }
-
-    private void goToCardDetails() {
+    private void goToCardDetails(){
         Intent intent = new Intent(this, CardDetailsActivity.class);
         startActivity(intent);
         finish();

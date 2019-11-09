@@ -42,31 +42,8 @@
             android:adjustViewBounds="true"
             tools:ignore="ContentDescription" />
 
-        <TextView
-            android:id="@+id/paycards_title"
-            style="@style/TextAppearance.AppCompat.Headline"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="60dp"
-            android:layout_toRightOf="@+id/intro_logo"
-            android:gravity="center_horizontal"
-            android:text="PAY.CARDS"
-            tools:ignore="HardcodedText" />
 
-        <TextView
-            android:id="@+id/text1"
-            style="@style/TextAppearance.AppCompat.Body1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_below="@+id/paycards_title"
-            android:layout_alignLeft="@+id/paycards_title"
-            android:layout_marginTop="12dp"
-            android:gravity="center_horizontal"
-            android:maxWidth="300dp"
-            android:text="@string/intro_tagline"
-            android:textColor="?android:textColorSecondary" />
+
 
     </RelativeLayout>
 

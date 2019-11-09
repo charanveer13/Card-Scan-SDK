@@ -30,63 +30,50 @@ import cards.pay.sample.demo.widget.CardNumberEditText;
 public class CardDetailsActivity extends AppCompatActivity {
 
     private static final String TAG = "CardDetailsActivity";
-
     private static final int REQUEST_CODE_SCAN_CARD = 1;
-
     private Toolbar mToolbar;
-
     private TextInputLayout mCardNumberField;
-
     private TextInputLayout mCardholderField;
-
     private TextInputLayout mExpiryField;
-
     private CardNumberValidator mCardNumberValidator;
     private CardHolderValidator mCardHolderValidator;
     private CardExpiryDateValidator mExpiryDateValidator;
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         setContentView(R.layout.activity_card_details);
-
         mToolbar = findViewById(R.id.toolbar);
         mCardNumberField = findViewById(R.id.card_number_field);
         mCardholderField = findViewById(R.id.cardholder_field);
         mExpiryField = findViewById(R.id.expiry_date_field);
         setupToolbar();
-
-        findViewById(R.id.scan_button).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.scan_button).setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View view) {
+            public void onClick(View view){
                 scanCard();
             }
         });
-
-        if (savedInstanceState == null) {
+        if (savedInstanceState == null){
             scanCard();
         }
     }
-
-
-    private void setupToolbar() {
+    private void setupToolbar(){
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        mToolbar.findViewById(R.id.button_next).setOnClickListener(new View.OnClickListener() {
+        mToolbar.findViewById(R.id.button_next).setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View view) {
+            public void onClick(View view){
                 Card card = readForm();
                 ValidationResult validationResult = validateForm(card);
                 setValidationResult(validationResult);
-                if (validationResult.isValid()) {
+                if (validationResult.isValid()){
                     goToFinalScreen(view);
                 }
             }
         });
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -95,7 +82,7 @@ public class CardDetailsActivity extends AppCompatActivity {
                 Card card = data.getParcelableExtra(ScanCardIntent.RESULT_PAYCARDS_CARD);
                 if (BuildConfig.DEBUG) Log.i(TAG, "Card info: " + card);
                 setCard(card);
-            } else if (resultCode == Activity.RESULT_CANCELED) {
+            } else if (resultCode == Activity.RESULT_CANCELED){
                 @CancelReason final int reason;
                 if (data != null) {
                     reason = data.getIntExtra(ScanCardIntent.RESULT_CANCEL_REASON, ScanCardIntent.BACK_PRESSED);
@@ -111,7 +98,6 @@ public class CardDetailsActivity extends AppCompatActivity {
             }
         }
     }
-
     private Card readForm() {
         String cardNumber = ((CardNumberEditText)mCardNumberField.getEditText()).getCardNumber();
         String holder = mCardholderField.getEditText().getText().toString();
@@ -125,38 +111,31 @@ public class CardDetailsActivity extends AppCompatActivity {
             mExpiryDateValidator = new CardExpiryDateValidator();
             mCardHolderValidator = new CardHolderValidator();
         }
-
-
         ValidationResult results = new ValidationResult(3);
         results.put(R.id.card_number_field, mCardNumberValidator.validate(card.getCardNumber()));
         results.put(R.id.cardholder_field, mCardHolderValidator.validate(card.getCardHolderName()));
         results.put(R.id.expiry_date_field, mExpiryDateValidator.validate(card.getExpirationDate()));
         return results;
     }
-
     private void setValidationResult(ValidationResult result) {
         mCardNumberField.setError(result.getMessage(R.id.card_number_field, getResources()));
         mCardholderField.setError(result.getMessage(R.id.cardholder_field, getResources()));
         mExpiryField.setError(result.getMessage(R.id.expiry_date_field, getResources()));
     }
-
     private void goToFinalScreen(View root) {
         Intent intent = new Intent(this, FinalActivity.class);
         startActivity(intent);
     }
-
     private void setCard(@NonNull Card card) {
         mCardNumberField.getEditText().setText(card.getCardNumber());
         mCardholderField.getEditText().setText(card.getCardHolderName());
         mExpiryField.getEditText().setText(card.getExpirationDate());
         setValidationResult(ValidationResult.empty());
     }
-
     private void scanCard() {
         Intent intent = new ScanCardIntent.Builder(this).build();
         startActivityForResult(intent, REQUEST_CODE_SCAN_CARD);
     }
-
     private static void showIme(@Nullable View view) {
         if (view == null) return;
         if (view instanceof EditText) view.requestFocus();
@@ -173,5 +152,4 @@ public class CardDetailsActivity extends AppCompatActivity {
             imm.showSoftInput(view, 0);
         }
     }
-
 }

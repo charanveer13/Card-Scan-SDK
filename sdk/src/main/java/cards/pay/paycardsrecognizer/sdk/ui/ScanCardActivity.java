@@ -10,7 +10,6 @@ import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.WindowManager;
-
 import cards.pay.paycardsrecognizer.sdk.Card;
 import cards.pay.paycardsrecognizer.sdk.ScanCardIntent;
 import cards.pay.paycardsrecognizer.sdk.camera.RecognitionAvailabilityChecker;
@@ -19,14 +18,11 @@ import cards.pay.paycardsrecognizer.sdk.camera.RecognitionUnavailableException;
 
 public class ScanCardActivity extends AppCompatActivity implements ScanCardFragment.InteractionListener,
         InitLibraryFragment.InteractionListener {
-
     private static final String TAG = "ScanCardActivity";
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
-
         getDelegate().onPostCreate(null);
 
         if (savedInstanceState == null) {
@@ -44,15 +40,13 @@ public class ScanCardActivity extends AppCompatActivity implements ScanCardFragm
             }
         }
     }
-
-    private void showInitLibrary() {
+    private void showInitLibrary(){
         Fragment fragment = new InitLibraryFragment();
         getSupportFragmentManager().beginTransaction()
                 .replace(android.R.id.content, fragment, InitLibraryFragment.TAG)
                 .setCustomAnimations(0, 0)
                 .commitNow();
     }
-
     private void showScanCard() {
         Fragment fragment = new ScanCardFragment();
         Bundle args = new Bundle(1);
@@ -65,15 +59,13 @@ public class ScanCardActivity extends AppCompatActivity implements ScanCardFragm
 
         ViewCompat.requestApplyInsets(findViewById(android.R.id.content));
     }
-
     @Override
     @RestrictTo(RestrictTo.Scope.LIBRARY)
-    public void onScanCardFailed(Exception e) {
+    public void onScanCardFailed(Exception e){
         Log.e(TAG, "Scan card failed", new RuntimeException("onScanCardFinishedWithError()", e));
         setResult(ScanCardIntent.RESULT_CODE_ERROR);
         finish();
     }
-
     @Override
     @RestrictTo(RestrictTo.Scope.LIBRARY)
     public void onScanCardFinished(Card card, @Nullable byte cardImage[]) {
@@ -83,14 +75,12 @@ public class ScanCardActivity extends AppCompatActivity implements ScanCardFragm
         setResult(RESULT_OK, intent);
         finish();
     }
-
     @Override
     public void onInitLibraryFailed(Throwable e) {
         Log.e(TAG, "Init library failed", new RuntimeException("onInitLibraryFailed()", e));
         setResult(ScanCardIntent.RESULT_CODE_ERROR);
         finish();
     }
-
     @Override
     public void onScanCardCanceled(@ScanCardIntent.CancelReason int actionId) {
         Intent intent = new Intent();
@@ -98,14 +88,12 @@ public class ScanCardActivity extends AppCompatActivity implements ScanCardFragm
         setResult(RESULT_CANCELED, intent);
         finish();
     }
-
     @Override
     @RestrictTo(RestrictTo.Scope.LIBRARY)
     public void onInitLibraryComplete() {
         if (isFinishing()) return;
         showScanCard();
     }
-
     private ScanCardRequest getScanRequest() {
         ScanCardRequest request = getIntent().getParcelableExtra(ScanCardIntent.KEY_SCAN_CARD_REQUEST);
         if (request == null) {

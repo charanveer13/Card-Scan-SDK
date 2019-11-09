@@ -3,13 +3,11 @@ apply plugin: 'com.android.application'
 uploadArchives.enabled = false
 
 ext.private = new Properties()
-if (rootProject.file('private.properties').exists()) {
+if (rootProject.file('private.properties').exists()){
     ext.private.load(new FileInputStream(rootProject.file('private.properties')))
 }
-
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-
     defaultConfig {
         applicationId "cards.pay.sample.demo"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -26,7 +24,7 @@ android {
     buildTypes {
         release {
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'),'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
         debug {
@@ -34,11 +32,11 @@ android {
             minifyEnabled false
             jniDebuggable true
         }
-        profiling {
+        profiling{
             initWith debug
         }
     }
-    packagingOptions {
+    packagingOptions{
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
     }
@@ -47,6 +45,12 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ":sdk")
+
+    implementation 'com.google.code.gson:gson:2.6.2'
+    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+    implementation 'com.squareup.okhttp3:okhttp:3.4.1'
+    implementation 'com.squareup.retrofit2:retrofit:2.6.0'
     //debugCompile project(path: ":sdk", configuration: 'release')
     //releaseCompile project(path: ":sdk", configuration: 'release')
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.ext.espressoVersion"
@@ -55,7 +59,6 @@ dependencies {
     implementation "com.android.support:design:$rootProject.ext.supportLibVersion"
     testImplementation "junit:junit:$rootProject.ext.junitVersion"
 }
-
 if (ext.private.getProperty("release.StoreFile") != null) {
     android.signingConfigs['release'].storeFile = file(ext.private['release.StoreFile'])
     android.signingConfigs['release'].storePassword = ext.private['release.StorePassword']

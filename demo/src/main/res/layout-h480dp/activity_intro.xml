@@ -40,27 +40,8 @@
             android:adjustViewBounds="true"
             tools:ignore="ContentDescription" />
 
-        <TextView
-            style="@style/TextAppearance.AppCompat.Headline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="24dp"
-            android:gravity="center_horizontal"
-            android:text="PAY.CARDS"
-            tools:ignore="HardcodedText" />
 
-        <TextView
-            android:id="@+id/text1"
-            style="@style/TextAppearance.AppCompat.Body1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="12dp"
-            android:gravity="center_horizontal"
-            android:maxWidth="300dp"
-            android:text="@string/intro_tagline"
-            android:textColor="?android:textColorSecondary" />
+
 
     </LinearLayout>
 

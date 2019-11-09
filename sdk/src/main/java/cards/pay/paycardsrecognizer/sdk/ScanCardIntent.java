@@ -17,10 +17,9 @@ import static cards.pay.paycardsrecognizer.sdk.ui.ScanCardRequest.DEFAULT_GRAB_C
 import static cards.pay.paycardsrecognizer.sdk.ui.ScanCardRequest.DEFAULT_SCAN_CARD_HOLDER;
 import static cards.pay.paycardsrecognizer.sdk.ui.ScanCardRequest.DEFAULT_SCAN_EXPIRATION_DATE;
 
-public final class ScanCardIntent {
+public final class ScanCardIntent{
 
     public static final int RESULT_CODE_ERROR = Activity.RESULT_FIRST_USER;
-
     public static final String RESULT_PAYCARDS_CARD = "RESULT_PAYCARDS_CARD";
     public static final String RESULT_CARD_IMAGE = "RESULT_CARD_IMAGE";
     public static final String RESULT_CANCEL_REASON = "RESULT_CANCEL_REASON";
@@ -37,61 +36,48 @@ public final class ScanCardIntent {
 
     private ScanCardIntent() {
     }
-
-    public final static class Builder {
+    public final static class Builder{
 
         private final Context mContext;
-
         private boolean mEnableSound = DEFAULT_ENABLE_SOUND;
-
         private boolean mScanExpirationDate = DEFAULT_SCAN_EXPIRATION_DATE;
-
         private boolean mScanCardHolder = DEFAULT_SCAN_CARD_HOLDER;
-
         private boolean mGrabCardImage = DEFAULT_GRAB_CARD_IMAGE;
-
 
         public Builder(Context context) {
             mContext = context;
         }
-
         /**
          * Scan expiration date. Default: <b>true</b>
          */
-        public Builder setScanExpirationDate(boolean scanExpirationDate) {
+        public Builder setScanExpirationDate(boolean scanExpirationDate){
             mScanExpirationDate = scanExpirationDate;
             return this;
         }
-
         /**
          * Scan expiration date. Default: <b>true</b>
          */
-        public Builder setScanCardHolder(boolean scanCardHolder) {
+        public Builder setScanCardHolder(boolean scanCardHolder){
             mScanCardHolder = scanCardHolder;
             return this;
         }
-
-
         /**
          * Enables or disables sounds in the library.<Br>
          * Default: <b>enabled</b>
          */
-        public Builder setSoundEnabled(boolean enableSound) {
+        public Builder setSoundEnabled(boolean enableSound){
             mEnableSound = enableSound;
             return this;
         }
-
-
         /**
          * Defines if the card image will be captured.
          * @param enable Defines if the card image will be captured. Default: <b>false</b>
          */
-        public Builder setSaveCard(boolean enable) {
+        public Builder setSaveCard(boolean enable){
             mGrabCardImage = enable;
             return this;
         }
-
-        public Intent build() {
+        public Intent build(){
             Intent intent = new Intent(mContext, ScanCardActivity.class);
             ScanCardRequest request = new ScanCardRequest(mEnableSound, mScanExpirationDate,
                     mScanCardHolder, mGrabCardImage);
